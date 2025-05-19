@@ -5,13 +5,11 @@ description: "A comprehensive guide to skateparks in Florida within 150 miles of
 ---
 
 # Skateparks within 150 Miles of Dunedin, FL
+{: .page-title}
 
-{: .park-list }
-
-<!-- This page contains information about skateparks near Dunedin, FL -->
+<p class="park-list">This page contains information about skateparks near Dunedin, FL</p>
 
 <div class="park-grid">
-<!-- Start of park entries -->
 
 ## 🛹 688 Skate Park – Clearwater, FL
 
@@ -522,3 +520,10 @@ https://www.satellitebeach.org/departments/recreation_department/facilities/sate
 https://skateparkoftampa.com/
 https://www.stpeteparksrec.org/skatepark.html
 https://www.ctsfl.us/recreation/parks/skatepark.htm
+
+</div><!-- end of park-grid -->
+
+<div class="page-footer">
+  <p>Last updated: May 2025</p>
+  <p><a href="index.html">Return to Home Page</a></p>
+</div>
