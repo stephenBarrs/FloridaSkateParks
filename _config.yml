@@ -1,0 +1,16 @@
+title: Florida Skateparks
+description: A comprehensive guide to skateparks in Florida
+theme: jekyll-theme-cayman
+markdown: kramdown
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
