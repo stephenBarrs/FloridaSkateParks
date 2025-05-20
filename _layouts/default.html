@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+
+{% seo %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header">
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search skateparks...">
+        <button onclick="performSearch()">Search</button>
+      </div>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+
+      <footer class="site-footer">
+        <span class="site-footer-credits">© {{ 'now' | date: "%Y" }} Florida Skateparks Guide</span>
+      </footer>
+    </main>
+
+    <script>
+      function performSearch() {
+        var searchTerm = document.getElementById('search-input').value.toLowerCase();
+        var parkCards = document.querySelectorAll('.park-card');
+        var found = false;
+
+        // Reset all cards to visible
+        parkCards.forEach(function(card) {
+          card.style.display = '';
+        });
+
+        // If search is empty, show all cards
+        if (searchTerm === '') {
+          return;
+        }
+
+        // Filter cards based on search term
+        parkCards.forEach(function(card) {
+          var cardText = card.textContent.toLowerCase();
+          if (cardText.includes(searchTerm)) {
+            found = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Display message if no results found
+        var noResultsMsg = document.getElementById('no-results-message');
+        if (!found) {
+          if (!noResultsMsg) {
+            noResultsMsg = document.createElement('p');
+            noResultsMsg.id = 'no-results-message';
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.textContent = 'No skateparks found matching "' + searchTerm + '". Try a different search term.';
+            document.querySelector('.skatepark-container').appendChild(noResultsMsg);
+          }
+        } else if (noResultsMsg) {
+          noResultsMsg.remove();
+        }
+      }
+
+      // Allow search by pressing Enter key
+      document.getElementById('search-input').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+          performSearch();
+        }
+      });
+    </script>
+  </body>
+</html>
