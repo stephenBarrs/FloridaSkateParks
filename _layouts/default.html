@@ -25,6 +25,7 @@
     </header>
 
     <main id="content" class="main-content" role="main">
+      <div id="search-results-count" style="display: none;" class="search-results-count"></div>
       {{ content }}
 
       <footer class="site-footer">
@@ -36,15 +37,23 @@
       function performSearch() {
         var searchTerm = document.getElementById('search-input').value.toLowerCase();
         var parkCards = document.querySelectorAll('.park-card');
-        var found = false;
+        var totalParks = parkCards.length;
+        var foundCount = 0;
 
         // Reset all cards to visible
         parkCards.forEach(function(card) {
           card.style.display = '';
         });
 
-        // If search is empty, show all cards
+        // If search is empty, show all cards and hide count
         if (searchTerm === '') {
+          document.getElementById('search-results-count').style.display = 'none';
+          
+          // Remove no results message if exists
+          var noResultsMsg = document.getElementById('no-results-message');
+          if (noResultsMsg) {
+            noResultsMsg.remove();
+          }
           return;
         }
 
@@ -52,20 +61,30 @@
         parkCards.forEach(function(card) {
           var cardText = card.textContent.toLowerCase();
           if (cardText.includes(searchTerm)) {
-            found = true;
+            foundCount++;
           } else {
             card.style.display = 'none';
           }
         });
 
-        // Display message if no results found
+        // Update search results count
+        var resultsElement = document.getElementById('search-results-count');
+        resultsElement.style.display = 'block';
+        
+        if (foundCount > 0) {
+          resultsElement.textContent = 'Found ' + foundCount + ' of ' + totalParks + ' skateparks matching "' + searchTerm + '"';
+        } else {
+          resultsElement.textContent = 'No skateparks found matching "' + searchTerm + '"';
+        }
+
+        // Display/hide no results message
         var noResultsMsg = document.getElementById('no-results-message');
-        if (!found) {
+        if (foundCount === 0) {
           if (!noResultsMsg) {
             noResultsMsg = document.createElement('p');
             noResultsMsg.id = 'no-results-message';
             noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = 'No skateparks found matching "' + searchTerm + '". Try a different search term.';
+            noResultsMsg.textContent = 'Try a different search term or check your spelling.';
             document.querySelector('.skatepark-container').appendChild(noResultsMsg);
           }
         } else if (noResultsMsg) {
