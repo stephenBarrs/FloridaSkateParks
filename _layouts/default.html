@@ -20,6 +20,7 @@
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       <div class="search-container">
         <input type="text" id="search-input" placeholder="Search skateparks...">
+        <span id="clear-search" class="clear-search" title="Clear search" style="display: none;">×</span>
         <button onclick="performSearch()">Search</button>
       </div>
     </header>
@@ -96,6 +97,33 @@
       document.getElementById('search-input').addEventListener('keyup', function(event) {
         if (event.key === 'Enter') {
           performSearch();
+        }
+      });
+
+      // Clear search input and results
+      document.getElementById('clear-search').addEventListener('click', function() {
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-results-count').style.display = 'none';
+        var parkCards = document.querySelectorAll('.park-card');
+        parkCards.forEach(function(card) {
+          card.style.display = '';
+        });
+        this.style.display = 'none';
+
+        // Remove no results message if exists
+        var noResultsMsg = document.getElementById('no-results-message');
+        if (noResultsMsg) {
+          noResultsMsg.remove();
+        }
+      });
+
+      // Show clear search button when typing
+      document.getElementById('search-input').addEventListener('input', function() {
+        var clearButton = document.getElementById('clear-search');
+        if (this.value.length > 0) {
+          clearButton.style.display = 'inline';
+        } else {
+          clearButton.style.display = 'none';
         }
       });
     </script>
